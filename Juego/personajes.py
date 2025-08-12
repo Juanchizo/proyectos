@@ -12,7 +12,7 @@ class Sword():
     def __init__(self, x_sw, y_sw):
         self.color = (255, 0, 0)
         self.centro = [x_sw, y_sw]
-        self.sword_img = pygame.image.load("espada.png")
+        self.sword_img = pygame.image.load("src/espada.png")
         self.sword_img = pygame.transform.scale(self.sword_img, (65, 65))
         self.sword_img = pygame.transform.rotate(self.sword_img, -45)
         self.radio = constantes.RADIO

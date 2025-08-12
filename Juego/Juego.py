@@ -1,6 +1,8 @@
 import pygame
 import constantes
 from personajes import Sword, Spear
+import tkinter
+from tkinter import messagebox
 
 #Set la ventanita y nombre
 ventana = pygame.display.set_mode((constantes.ANCHO, constantes.ALTO))
@@ -46,10 +48,16 @@ while run == True:
     lanza.actualizar(espada)
 
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run == False
-        
-        #Cuando se presiona la tecla    
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            # Mostrar cuadro de confirmación para cerrar
+            root = tkinter.Tk()
+            root.withdraw()  # Oculta la ventana principal de Tkinter
+            respuesta = messagebox.askyesno("Salir", "¿Seguro que quieres cerrar el juego?")
+            root.destroy()
+            if respuesta:
+                run = False
+
+        #Cuando se presiona la tecla
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a:
                 print("Izquierda")
