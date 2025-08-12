@@ -1,0 +1,78 @@
+import pygame
+import constantes
+import math
+pygame.font.init()
+
+class Circulo:
+    def __init__(self):
+        self.radio = constantes.RADIO
+        self.vida = 100
+
+class Sword():
+    def __init__(self, x_sw, y_sw):
+        self.color = (255, 0, 0)
+        self.centro = [x_sw, y_sw]
+        self.sword_img = pygame.image.load("espada.png")
+        self.sword_img = pygame.transform.scale(self.sword_img, (65, 65))
+        self.sword_img = pygame.transform.rotate(self.sword_img, -45)
+        self.radio = constantes.RADIO
+        self.vida = constantes.VIDA
+        self.recta_sw = None
+
+    def movimiento(self, x_mov, y_mov):
+        self.centro[0] += x_mov
+        self.centro[1] += y_mov
+    
+    def dibujar(self, vent, cursor_pos):
+        dx = cursor_pos[0] - self.centro[0]
+        dy = cursor_pos[1] - self.centro[1]
+        angle = pygame.math.Vector2(dx, dy).angle_to((1, 0))
+        rad = math.radians(-angle)
+
+        distancia_fuera = 42
+        offset_x = (self.radio + distancia_fuera) * math.cos(rad)
+        offset_y = (self.radio + distancia_fuera) * math.sin(rad)
+        espada_pos = (self.centro[0] + offset_x, self.centro[1] + offset_y)
+
+        rotated_img = pygame.transform.rotate(self.sword_img, angle)
+        rotated_rect = rotated_img.get_rect(center=espada_pos)
+        self.recta_sw = rotated_rect
+        pygame.draw.circle(vent, self.color, (self.centro[0], self.centro[1]), self.radio)
+        
+        font = pygame.font.Font(None, 35)
+        text = font.render(str(self.vida), True, (255, 255, 255))
+        border_text = font.render(str(self.vida), True, (0, 0, 0))
+        for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)]:
+            vent.blit(border_text, text.get_rect(center=(self.centro[0]+dx, self.centro[1]+dy)))
+        text_rect = text.get_rect(center=(self.centro[0], self.centro[1]))
+        vent.blit(text, text_rect)
+        vent.blit(rotated_img, rotated_rect)
+
+    def colisiona_con_spear(self, rec_s):
+        return self.recta_sw.colliderect(rec_s)
+
+
+class Spear():
+    def __init__(self, x_s, y_s):
+        self.radio = constantes.RADIO
+        self.vida = constantes.VIDA
+        self.xy_spear = (x_s, y_s)
+        self.visible = True
+        self.recta = None
+        
+    def dibujar_spear(self, vent):
+        if not self.visible:
+            return
+        font_s = pygame.font.Font(None, 35)
+        render = pygame.draw.circle(vent, (0, 255, 0), self.xy_spear, self.radio)
+        text_s = font_s.render(str(self.vida), True, (255, 255, 255))
+        border_text_s = font_s.render(str(self.vida), True, (0, 0, 0))
+        for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)]:
+            vent.blit(border_text_s, text_s.get_rect(center=(self.xy_spear[0]+dx, self.xy_spear[1]+dy)))
+        text_rect_s = text_s.get_rect(center=self.xy_spear)
+        vent.blit(text_s, text_rect_s)
+        self.recta = render
+
+    def actualizar(self, sword):
+        if self.visible and sword.colisiona_con_spear(self.recta):
+            self.visible = False
