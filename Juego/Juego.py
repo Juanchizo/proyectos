@@ -52,38 +52,72 @@ while run == True:
         #Cuando se presiona la tecla
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a:
-                print("Izquierda")
+                # print("Izquierda")
                 a_pres = True
                 
             if event.key == pygame.K_d:
-                print("Derecha")
+                # print("Derecha")
                 d_pres = True
                 
             if event.key == pygame.K_s:
-                print("Abajo")
+                # print("Abajo")
                 s_pres = True
                 
             if event.key == pygame.K_w:
-                print("Arriba")
+                # print("Arriba")
                 w_pres = True
         
         #Cuando se deja de presionar        
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a:
-                print("Izquierda")
+                # print("Izquierda")
                 a_pres = False
                 
             if event.key == pygame.K_d:
-                print("Derecha")
+                # print("Derecha")
                 d_pres = False
                 
             if event.key == pygame.K_s:
-                print("Abajo")
+                # print("Abajo")
                 s_pres = False
                 
             if event.key == pygame.K_w:
+                # print("Arriba")
+                w_pres = False
+            
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                print("Izquierda")
+                a_pres = True
+                
+            if event.key == pygame.K_RIGHT:
+                print("Derecha")
+                d_pres = True
+                
+            if event.key == pygame.K_DOWN:
+                print("Abajo")
+                s_pres = True
+                
+            if event.key == pygame.K_UP:
+                print("Arriba")
+                w_pres = True
+        
+        #Cuando se deja de presionar        
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                print("Izquierda")
+                a_pres = False
+                
+            if event.key == pygame.K_RIGHT:
+                print("Derecha")
+                d_pres = False
+                
+            if event.key == pygame.K_DOWN:
+                print("Abajo")
+                s_pres = False
+                
+            if event.key == pygame.K_UP:
                 print("Arriba")
                 w_pres = False
-                
     pygame.display.update()    
 pygame.quit()
