@@ -56,24 +56,26 @@ class Spear():
     def __init__(self, x_s, y_s):
         self.radio = constantes.RADIO
         self.vida = constantes.VIDA
-        self.xy_spear = (x_s, y_s)
+        self.xy_spear = [x_s, y_s]
+        self.xy_s = (self.xy_spear[0], self.xy_spear[1])
         self.visible = True
         self.recta = None
         
     def movimiento_s(self, x_mov, y_mov):
         self.xy_spear[0] += x_mov
         self.xy_spear[1] += y_mov
+        self.xy_s = (self.xy_spear[0], self.xy_spear[1])
         
     def dibujar_spear(self, vent):
         if not self.visible:
             return
         font_s = pygame.font.Font(None, 35)
-        render = pygame.draw.circle(vent, (0, 255, 0), self.xy_spear, self.radio)
+        render = pygame.draw.circle(vent, (0, 255, 0), self.xy_s, self.radio)
         text_s = font_s.render(str(self.vida), True, (255, 255, 255))
         border_text_s = font_s.render(str(self.vida), True, (0, 0, 0))
         for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)]:
             vent.blit(border_text_s, text_s.get_rect(center=(self.xy_spear[0]+dx, self.xy_spear[1]+dy)))
-        text_rect_s = text_s.get_rect(center=self.xy_spear)
+        text_rect_s = text_s.get_rect(center=self.xy_s)
         vent.blit(text_s, text_rect_s)
         self.recta = render
 

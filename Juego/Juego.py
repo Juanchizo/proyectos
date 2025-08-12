@@ -15,6 +15,11 @@ d_pres = False
 s_pres = False
 w_pres = False
 
+a_pres_s = False
+d_pres_s = False
+s_pres_s = False
+w_pres_s = False
+
 s_render = True
 
 reloj = pygame.time.Clock()
@@ -38,6 +43,15 @@ while run == True:
         espada.movimiento(0, constantes.VELOCIDAD)
     if w_pres == True:
         espada.movimiento(0, -constantes.VELOCIDAD)
+        
+    if a_pres_s == True:
+        lanza.movimiento_s(-constantes.VELOCIDAD, 0)
+    if d_pres_s == True:
+        lanza.movimiento_s(constantes.VELOCIDAD, 0)
+    if s_pres_s == True:
+        lanza.movimiento_s(0, constantes.VELOCIDAD)
+    if w_pres_s == True:
+        lanza.movimiento_s(0, -constantes.VELOCIDAD)
         
     cursorpos = pygame.mouse.get_pos()
  
@@ -88,36 +102,32 @@ while run == True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 print("Izquierda")
-                a_pres = True
+                a_pres_s = True
                 
             if event.key == pygame.K_RIGHT:
                 print("Derecha")
-                d_pres = True
+                d_pres_s = True
                 
             if event.key == pygame.K_DOWN:
                 print("Abajo")
-                s_pres = True
+                s_pres_s = True
                 
             if event.key == pygame.K_UP:
                 print("Arriba")
-                w_pres = True
+                w_pres_s = True
         
         #Cuando se deja de presionar        
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
-                print("Izquierda")
-                a_pres = False
+                a_pres_s = False
                 
             if event.key == pygame.K_RIGHT:
-                print("Derecha")
-                d_pres = False
+                d_pres_s = False
                 
             if event.key == pygame.K_DOWN:
-                print("Abajo")
-                s_pres = False
+                s_pres_s = False
                 
             if event.key == pygame.K_UP:
-                print("Arriba")
-                w_pres = False
+                w_pres_s = False
     pygame.display.update()    
 pygame.quit()
