@@ -60,6 +60,10 @@ class Spear():
         self.visible = True
         self.recta = None
         
+    def movimiento_s(self, x_mov, y_mov):
+        self.xy_spear[0] += x_mov
+        self.xy_spear[1] += y_mov
+        
     def dibujar_spear(self, vent):
         if not self.visible:
             return
