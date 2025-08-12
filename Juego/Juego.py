@@ -54,7 +54,7 @@ while run == True:
         lanza.movimiento_s(0, -constantes.VELOCIDAD)
 
  
-    lanza.dibujar(ventana)
+    lanza.dibujar(ventana) 
     espada.dibujar(ventana)
 
     for event in pygame.event.get():
