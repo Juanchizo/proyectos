@@ -52,12 +52,10 @@ while run == True:
         lanza.movimiento_s(0, constantes.VELOCIDAD)
     if w_pres_s == True:
         lanza.movimiento_s(0, -constantes.VELOCIDAD)
-        
-    cursorpos = pygame.mouse.get_pos()
+
  
-    lanza.dibujar_spear(ventana)
-    espada.dibujar(ventana, cursorpos)
-    lanza.actualizar(espada)
+    lanza.dibujar(ventana)
+    espada.dibujar(ventana)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):

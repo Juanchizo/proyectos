@@ -23,20 +23,7 @@ class Sword():
         self.centro[0] += x_mov
         self.centro[1] += y_mov
     
-    def dibujar(self, vent, cursor_pos):
-        dx = cursor_pos[0] - self.centro[0]
-        dy = cursor_pos[1] - self.centro[1]
-        angle = pygame.math.Vector2(dx, dy).angle_to((1, 0))
-        rad = math.radians(-angle)
-
-        distancia_fuera = 42
-        offset_x = (self.radio + distancia_fuera) * math.cos(rad)
-        offset_y = (self.radio + distancia_fuera) * math.sin(rad)
-        espada_pos = (self.centro[0] + offset_x, self.centro[1] + offset_y)
-
-        rotated_img = pygame.transform.rotate(self.sword_img, angle)
-        rotated_rect = rotated_img.get_rect(center=espada_pos)
-        self.recta_sw = rotated_rect
+    def dibujar(self, vent):
         pygame.draw.circle(vent, self.color, (self.centro[0], self.centro[1]), self.radio)
         
         font = pygame.font.Font(None, 35)
@@ -46,10 +33,7 @@ class Sword():
             vent.blit(border_text, text.get_rect(center=(self.centro[0]+dx, self.centro[1]+dy)))
         text_rect = text.get_rect(center=(self.centro[0], self.centro[1]))
         vent.blit(text, text_rect)
-        vent.blit(rotated_img, rotated_rect)
 
-    def colisiona_con_spear(self, rec_s):
-        return self.recta_sw.colliderect(rec_s)
 
 
 class Spear():
@@ -66,19 +50,18 @@ class Spear():
         self.xy_spear[1] += y_mov
         self.xy_s = (self.xy_spear[0], self.xy_spear[1])
         
-    def dibujar_spear(self, vent):
+    def dibujar(self, vent):
         if not self.visible:
             return
         font_s = pygame.font.Font(None, 35)
+        
         render = pygame.draw.circle(vent, (0, 255, 0), self.xy_s, self.radio)
+        
         text_s = font_s.render(str(self.vida), True, (255, 255, 255))
         border_text_s = font_s.render(str(self.vida), True, (0, 0, 0))
         for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)]:
             vent.blit(border_text_s, text_s.get_rect(center=(self.xy_spear[0]+dx, self.xy_spear[1]+dy)))
         text_rect_s = text_s.get_rect(center=self.xy_s)
         vent.blit(text_s, text_rect_s)
+        
         self.recta = render
-
-    def actualizar(self, sword):
-        if self.visible and sword.colisiona_con_spear(self.recta):
-            self.visible = False
