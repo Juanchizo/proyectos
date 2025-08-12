@@ -1,8 +1,6 @@
 import pygame
 import constantes
 from personajes import Sword, Spear
-import tkinter
-from tkinter import messagebox
 
 #Set la ventanita y nombre
 ventana = pygame.display.set_mode((constantes.ANCHO, constantes.ALTO))
@@ -16,6 +14,11 @@ a_pres = False
 d_pres = False
 s_pres = False
 w_pres = False
+
+a_pres_s = False
+d_pres_s = False
+s_pres_s = False
+w_pres_s = False
 
 s_render = True
 
@@ -41,6 +44,15 @@ while run == True:
     if w_pres == True:
         espada.movimiento(0, -constantes.VELOCIDAD)
         
+    if a_pres_s == True:
+        lanza.movimiento_s(-constantes.VELOCIDAD, 0)
+    if d_pres_s == True:
+        lanza.movimiento_s(constantes.VELOCIDAD, 0)
+    if s_pres_s == True:
+        lanza.movimiento_s(0, constantes.VELOCIDAD)
+    if w_pres_s == True:
+        lanza.movimiento_s(0, -constantes.VELOCIDAD)
+        
     cursorpos = pygame.mouse.get_pos()
  
     lanza.dibujar_spear(ventana)
@@ -49,49 +61,73 @@ while run == True:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-            # Mostrar cuadro de confirmación para cerrar
-            root = tkinter.Tk()
-            root.withdraw()  # Oculta la ventana principal de Tkinter
-            respuesta = messagebox.askyesno("Salir", "¿Seguro que quieres cerrar el juego?")
-            root.destroy()
-            if respuesta:
-                run = False
+            run = False
 
         #Cuando se presiona la tecla
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a:
-                print("Izquierda")
+                # print("Izquierda")
                 a_pres = True
                 
             if event.key == pygame.K_d:
-                print("Derecha")
+                # print("Derecha")
                 d_pres = True
                 
             if event.key == pygame.K_s:
-                print("Abajo")
+                # print("Abajo")
                 s_pres = True
                 
             if event.key == pygame.K_w:
-                print("Arriba")
+                # print("Arriba")
                 w_pres = True
         
         #Cuando se deja de presionar        
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a:
-                print("Izquierda")
+                # print("Izquierda")
                 a_pres = False
                 
             if event.key == pygame.K_d:
-                print("Derecha")
+                # print("Derecha")
                 d_pres = False
                 
             if event.key == pygame.K_s:
-                print("Abajo")
+                # print("Abajo")
                 s_pres = False
                 
             if event.key == pygame.K_w:
-                print("Arriba")
+                # print("Arriba")
                 w_pres = False
+            
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                print("Izquierda")
+                a_pres_s = True
                 
+            if event.key == pygame.K_RIGHT:
+                print("Derecha")
+                d_pres_s = True
+                
+            if event.key == pygame.K_DOWN:
+                print("Abajo")
+                s_pres_s = True
+                
+            if event.key == pygame.K_UP:
+                print("Arriba")
+                w_pres_s = True
+        
+        #Cuando se deja de presionar        
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                a_pres_s = False
+                
+            if event.key == pygame.K_RIGHT:
+                d_pres_s = False
+                
+            if event.key == pygame.K_DOWN:
+                s_pres_s = False
+                
+            if event.key == pygame.K_UP:
+                w_pres_s = False
     pygame.display.update()    
 pygame.quit()

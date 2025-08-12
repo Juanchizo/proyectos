@@ -1,4 +1,4 @@
-from decimal import Decimal
+from decimal import Decimal as deck
 import re
 
 introducir = input("Coloca un numero te lo pasaremos a letra: ")
@@ -6,17 +6,21 @@ introducir = input("Coloca un numero te lo pasaremos a letra: ")
 def NUM1LE():
     indente = True
     lista = ["cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez", "once", "doce", "trece", "catorce", "quince"]
-    converbo = Decimal(introducir)
-    converint = int(converbo)
+    lista2 = ["diez", "veinte", "treinta"]
+    converde = deck(introducir)
+    converint = int(converde)
     comprob = re.findall(r"\W", introducir)
     
 
     if comprob == ["."]:
-        decimals = int((converint - converbo) * -10)
-        print(lista[converint], "punto", lista[decimals])
+        decimals = introducir.split(".")
+        print(lista[converint], "punto", lista[int(decimals[1])])
         indente = False
             
     if indente:
-        print(lista[converint])
+        if converint > 15:
+            print({lista2[0]}, "y", lista[converint - 10])
+        else:
+            print(lista[converint])
         
 NUM1LE()
